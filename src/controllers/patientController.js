@@ -249,7 +249,7 @@ const grantPatientAccess = async (req, res) => {
       relatedPatient: patientId,
       type: 'access_granted',
       title: 'New Patient Access Granted',
-      message: `${req.user.name} has granted you access to their MediSync medication records.`,
+      message: `${req.user.name} has granted you access to their MediKit medication records.`,
       actionLink: authorizedUser.role === 'doctor' ? '/doctor-dashboard.html' : '/caregiver-dashboard.html',
     });
 

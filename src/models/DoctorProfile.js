@@ -23,7 +23,7 @@ const DoctorProfileSchema = new mongoose.Schema(
     clinicHospital: {
       type: String,
       trim: true,
-      default: 'MediSync Health Center',
+      default: 'MediKit Health Center',
     },
     verifiedStatus: {
       type: Boolean,

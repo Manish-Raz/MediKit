@@ -64,7 +64,7 @@ const register = async (req, res) => {
         user: user._id,
         specialty: specialty || 'General Practice',
         licenseNumber: licenseNumber || `MD-${Math.floor(100000 + Math.random() * 900000)}`,
-        clinicHospital: clinicHospital || 'MediSync Partner Clinic',
+        clinicHospital: clinicHospital || 'MediKit Partner Clinic',
         verifiedStatus: false, // Self-registered doctors are unverified demo accounts by default
       });
     } else if (role === 'caregiver') {

@@ -1,5 +1,5 @@
 /**
- * MediSync Caregiver Dashboard Logic
+ * MediKit Caregiver Dashboard Logic
  */
 
 const SAMPLE_CAREGIVER_PATIENTS = [

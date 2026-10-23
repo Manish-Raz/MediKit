@@ -1,5 +1,5 @@
 /**
- * MediSync Common UI, Navigation & Animation System
+ * MediKit Common UI, Navigation & Animation System
  */
 
 function showToast(message, type = 'success', duration = 4000) {
@@ -294,7 +294,7 @@ function openEmergencyCardModal() {
               </svg>
             </div>
             <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px;">
-              Scan for EMT / Emergency Provider Controlled Access Token: <code>MEDISYNC-EMERG-8921</code>
+              Scan for EMT / Emergency Provider Controlled Access Token: <code>MEDIKIT-EMERG-8921</code>
             </p>
           </div>
 
@@ -356,7 +356,7 @@ function openOCRScannerModal() {
         </div>
         <div class="modal-body">
           <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">
-            Upload a prescription paper slip or doctor's digital note. MediSync OCR analyzes the image and extracts dosage, drug names, and scheduling for clinician review.
+            Upload a prescription paper slip or doctor's digital note. MediKit OCR analyzes the image and extracts dosage, drug names, and scheduling for clinician review.
           </p>
 
           <div id="ocr-dropzone" style="border: 2px dashed var(--primary-teal); border-radius: var(--radius-lg); padding: 32px 20px; text-align: center; background: var(--teal-subtle); cursor: pointer;" onclick="document.getElementById('ocr-file-input').click()">

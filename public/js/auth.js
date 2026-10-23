@@ -1,11 +1,11 @@
 /**
- * MediSync Authentication & Demo State Helper
+ * MediKit Authentication & Demo State Helper
  */
 
 const DEFAULT_DEMO_PATIENT = {
   _id: '671900000000000000000001',
   name: 'Johnathan Doe',
-  email: 'john.patient@medisync.demo',
+  email: 'john.patient@medikit.demo',
   role: 'patient',
   phone: '(555) 100-2020',
   timezone: 'America/New_York',
@@ -49,7 +49,7 @@ async function checkAuth(requiredRoles = null) {
 
   // Graceful fallback user so every page works immediately without requiring prior login
   if (!currentUser) {
-    const storedRole = localStorage.getItem('medisync_demo_role') || 'patient';
+    const storedRole = localStorage.getItem('medikit_demo_role') || 'patient';
     currentUser = getMockUserForRole(storedRole);
     currentProfile = storedRole === 'patient' ? DEFAULT_DEMO_PATIENT_PROFILE : {};
   }
@@ -63,7 +63,7 @@ function getMockUserForRole(role) {
       return {
         _id: '671900000000000000000002',
         name: 'Dr. Sarah Jenkins, MD',
-        email: 'dr.jenkins@medisync.demo',
+        email: 'dr.jenkins@medikit.demo',
         role: 'doctor',
         phone: '(555) 200-3030',
       };
@@ -71,7 +71,7 @@ function getMockUserForRole(role) {
       return {
         _id: '671900000000000000000004',
         name: 'Emily Doe',
-        email: 'emily.caregiver@medisync.demo',
+        email: 'emily.caregiver@medikit.demo',
         role: 'caregiver',
         phone: '(555) 300-5050',
       };
@@ -79,7 +79,7 @@ function getMockUserForRole(role) {
       return {
         _id: '671900000000000000000005',
         name: 'Metro Center Pharmacy Admin',
-        email: 'metro.pharmacy@medisync.demo',
+        email: 'metro.pharmacy@medikit.demo',
         role: 'pharmacy',
         phone: '(555) 400-6060',
       };
@@ -89,7 +89,7 @@ function getMockUserForRole(role) {
 }
 
 function switchDemoRole(role) {
-  localStorage.setItem('medisync_demo_role', role);
+  localStorage.setItem('medikit_demo_role', role);
   redirectRoleDashboard(role);
 }
 
@@ -118,7 +118,7 @@ async function handleLogout() {
   } catch (err) {
     // Ignore error
   }
-  localStorage.removeItem('medisync_demo_role');
+  localStorage.removeItem('medikit_demo_role');
   window.location.href = '/login.html';
 }
 

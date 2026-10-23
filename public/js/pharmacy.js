@@ -1,5 +1,5 @@
 /**
- * MediSync Pharmacy Dashboard Logic
+ * MediKit Pharmacy Dashboard Logic
  */
 
 const SAMPLE_PHARMACY_ITEMS = [

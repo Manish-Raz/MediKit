@@ -1,7 +1,7 @@
 {
-  "name": "medisync",
+  "name": "medikit",
   "version": "1.0.0",
-  "description": "MediSync - Patient-Doctor Medication Coordination Platform",
+  "description": "MediKit - Patient-Doctor Medication Coordination Platform",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -16,7 +16,7 @@
     "prescriptions",
     "safety"
   ],
-  "author": "MediSync Team",
+  "author": "MediKit Team",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

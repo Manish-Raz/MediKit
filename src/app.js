@@ -18,7 +18,7 @@ const { apiLimiter } = require('./middleware/rateLimiter');
 
 const createApp = (mongoUri) => {
   const app = express();
-  const dbUri = mongoUri || process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/medisync';
+  const dbUri = mongoUri || process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/medikit';
 
   // Security Headers via Helmet with relaxed CSP for CDNs (GSAP, Lucide icons, Google Fonts)
   app.use(
@@ -65,7 +65,7 @@ const createApp = (mongoUri) => {
   const isProd = process.env.NODE_ENV === 'production';
   app.use(
     session({
-      secret: process.env.SESSION_SECRET || 'medisync_fallback_session_secret_2026',
+      secret: process.env.SESSION_SECRET || 'medikit_fallback_session_secret_2026',
       resave: false,
       saveUninitialized: false,
       store: MongoStore.create({
@@ -90,7 +90,7 @@ const createApp = (mongoUri) => {
   app.get('/api/health', (req, res) => {
     res.status(200).json({
       status: 'healthy',
-      service: 'MediSync API',
+      service: 'MediKit API',
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),
     });

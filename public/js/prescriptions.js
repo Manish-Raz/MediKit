@@ -1,5 +1,5 @@
 /**
- * MediSync Prescriptions Management & Audit History
+ * MediKit Prescriptions Management & Audit History
  */
 
 const SAMPLE_PRESCRIPTIONS = [

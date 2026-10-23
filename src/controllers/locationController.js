@@ -119,7 +119,7 @@ const getNearbyPharmacies = async (req, res) => {
       success: true,
       count: combinedList.length,
       pharmacies: combinedList,
-      source: 'MediSync Verified Partner Network & OpenStreetMap Discovery',
+      source: 'MediKit Verified Partner Network & OpenStreetMap Discovery',
     });
   } catch (error) {
     console.error('[Pharmacies Discovery Error]', error);

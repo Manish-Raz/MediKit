@@ -2,7 +2,7 @@ const InteractionRule = require('../models/InteractionRule');
 const Prescription = require('../models/Prescription');
 
 const CLINICAL_DISCLAIMER =
-  'MediSync Drug Interaction & Duplication Checker is an educational and screening aid for demonstration purposes only. It does not substitute professional clinical judgment, full pharmaceutical review, or medical consultation. Absence of a warning does not guarantee safety.';
+  'MediKit Drug Interaction & Duplication Checker is an educational and screening aid for demonstration purposes only. It does not substitute professional clinical judgment, full pharmaceutical review, or medical consultation. Absence of a warning does not guarantee safety.';
 
 /**
  * Check a candidate medication or full patient profile for duplicates and interactions.

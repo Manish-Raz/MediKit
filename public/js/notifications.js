@@ -1,5 +1,5 @@
 /**
- * MediSync Notification Center Logic
+ * MediKit Notification Center Logic
  */
 
 const SAMPLE_NOTIFICATIONS = [

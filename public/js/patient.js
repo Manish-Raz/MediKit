@@ -1,5 +1,5 @@
 /**
- * MediSync Patient Dashboard Logic
+ * MediKit Patient Dashboard Logic
  */
 
 const SAMPLE_TODAY_DOSES = [

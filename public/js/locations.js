@@ -1,5 +1,5 @@
 /**
- * MediSync Location Discovery & Medicine Availability Finder
+ * MediKit Location Discovery & Medicine Availability Finder
  */
 
 const DEFAULT_PHARMACIES = [

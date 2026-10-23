@@ -1,5 +1,5 @@
 /**
- * MediSync API Client Wrapper
+ * MediKit API Client Wrapper
  */
 const API_BASE = '/api/v1';
 

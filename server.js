@@ -4,7 +4,7 @@ const createApp = require('./src/app');
 const { startCronJobs, stopCronJobs } = require('./src/jobs/overdueDosesJob');
 
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/medisync';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/medikit';
 
 const startServer = async () => {
   try {
@@ -20,7 +20,7 @@ const startServer = async () => {
     // Start HTTP server
     const server = app.listen(PORT, () => {
       console.log(`====================================================`);
-      console.log(` MediSync Server is running on: http://localhost:${PORT}`);
+      console.log(` MediKit Server is running on: http://localhost:${PORT}`);
       console.log(` Environment: ${process.env.NODE_ENV || 'development'}`);
       console.log(` Health Check: http://localhost:${PORT}/api/health`);
       console.log(` Patient Dashboard: http://localhost:${PORT}/patient-dashboard.html`);
@@ -32,7 +32,7 @@ const startServer = async () => {
 
     // Graceful shutdown handling
     const shutdown = () => {
-      console.log('\nGracefully shutting down MediSync server...');
+      console.log('\nGracefully shutting down MediKit server...');
       stopCronJobs();
       server.close(() => {
         console.log('HTTP server closed.');
@@ -43,7 +43,7 @@ const startServer = async () => {
     process.on('SIGINT', shutdown);
     process.on('SIGTERM', shutdown);
   } catch (error) {
-    console.error('Fatal error starting MediSync server:', error);
+    console.error('Fatal error starting MediKit server:', error);
     process.exit(1);
   }
 };

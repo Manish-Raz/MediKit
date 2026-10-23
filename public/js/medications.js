@@ -1,5 +1,5 @@
 /**
- * MediSync Medications & Unified Timeline Logic
+ * MediKit Medications & Unified Timeline Logic
  */
 
 const SAMPLE_MEDICATIONS = [

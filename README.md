@@ -1,6 +1,6 @@
-# MediSync — Patient–Doctor Medication Coordination Platform
+# MediKit — Patient–Doctor Medication Coordination Platform
 
-MediSync is a full-stack healthcare coordination web application built from scratch to eliminate polypharmacy risks, duplicate prescriptions, dangerous drug-drug interactions, and missed medication doses. It connects **Patients**, **Attending Doctors**, **Family Caregivers**, and **Authorized Pharmacies** into a single, cohesive, real-time safety ecosystem.
+MediKit is a full-stack healthcare coordination web application built from scratch to eliminate polypharmacy risks, duplicate prescriptions, dangerous drug-drug interactions, and missed medication doses. It connects **Patients**, **Attending Doctors**, **Family Caregivers**, and **Authorized Pharmacies** into a single, cohesive, real-time safety ecosystem.
 
 ---
 
@@ -13,7 +13,7 @@ Patients receiving prescriptions from multiple specialists (such as a primary ca
 - **Adherence Breakdown:** Unmonitored missed doses, incorrect schedules, or unrecorded reasons for skipped medication.
 - **Fragmented Medical Histories:** Doctors lacking visibility into prescriptions issued by other healthcare providers.
 
-### The MediSync Solution
+### The MediKit Solution
 - **Centralized Medication Safety Profile:** A real-time record of all active prescriptions, dosages, and documented allergies.
 - **Intelligent Screening Engine:** Automatically detects direct duplicate medications, identical active ingredients under different brand names, and drug interactions before a doctor confirms a prescription.
 - **Daily Dose Timeline & Adherence Tracker:** Patients record doses as Taken or Skipped with clinical reasons. Background processes automatically transition overdue doses to Missed and compute 30-day adherence rates.
@@ -47,7 +47,7 @@ Patients receiving prescriptions from multiple specialists (such as a primary ca
 ## 3. Project Structure
 
 ```
-medisync/
+medikit/
 ├── public/
 │   ├── index.html                   # Public landing page with 1-click demo launchers
 │   ├── login.html                   # Sign in page with seeded demo selectors
@@ -122,7 +122,7 @@ medisync/
 ├── scripts/
 │   └── seed.js                      # Realistic demo database seeder
 ├── tests/
-│   └── medisync.test.js             # Automated test suite (Jest + Supertest)
+│   └── medikit.test.js             # Automated test suite (Jest + Supertest)
 ├── .env.example
 ├── .gitignore
 ├── package.json
@@ -155,8 +155,8 @@ cp .env.example .env
 Default configuration values in `.env`:
 ```env
 PORT=3000
-MONGODB_URI=mongodb://127.0.0.1:27017/medisync
-SESSION_SECRET=medisync_secure_session_key_hackathon_2026_dev
+MONGODB_URI=mongodb://127.0.0.1:27017/medikit
+SESSION_SECRET=medikit_secure_session_key_hackathon_2026_dev
 NODE_ENV=development
 CLIENT_URL=http://localhost:3000
 ```
@@ -175,7 +175,7 @@ To verify authentication, authorization boundaries, interaction detection, dose 
 npm test
 ```
 
-### Step 5: Start the MediSync Application
+### Step 5: Start the MediKit Application
 ```bash
 npm start
 # Or for development with auto-reloading:
@@ -193,11 +193,11 @@ All demo accounts share the password: **`Password123!`**
 
 | Role | Name | Email | Primary Features & Dashboard |
 | :--- | :--- | :--- | :--- |
-| **Patient** | Johnathan Doe | `john.patient@medisync.demo` | Daily dose tracking (Take/Skip), 30-day adherence meter, drug interaction warnings, allergy record, authorization manager. |
-| **Doctor 1 (PCP)** | Dr. Sarah Jenkins, MD | `dr.jenkins@medisync.demo` | Authorized patient roster, prescription authoring with live drug screening, prescription modification & discontinuation. |
-| **Doctor 2 (Cardio)** | Dr. Marcus Chen, MD | `dr.chen@medisync.demo` | Multi-doctor coordination, specialist prescription management, interaction screening against patient's existing medications. |
-| **Caregiver** | Emily Doe | `emily.caregiver@medisync.demo` | Family adherence monitoring, missed-dose alerts, authorized dose logging on behalf of patient. |
-| **Pharmacy** | Metro Pharmacy | `metro.pharmacy@medisync.demo` | Medicine catalog management, stock quantity and price updates, availability verification timestamps. |
+| **Patient** | Johnathan Doe | `john.patient@medikit.demo` | Daily dose tracking (Take/Skip), 30-day adherence meter, drug interaction warnings, allergy record, authorization manager. |
+| **Doctor 1 (PCP)** | Dr. Sarah Jenkins, MD | `dr.jenkins@medikit.demo` | Authorized patient roster, prescription authoring with live drug screening, prescription modification & discontinuation. |
+| **Doctor 2 (Cardio)** | Dr. Marcus Chen, MD | `dr.chen@medikit.demo` | Multi-doctor coordination, specialist prescription management, interaction screening against patient's existing medications. |
+| **Caregiver** | Emily Doe | `emily.caregiver@medikit.demo` | Family adherence monitoring, missed-dose alerts, authorized dose logging on behalf of patient. |
+| **Pharmacy** | Metro Pharmacy | `metro.pharmacy@medikit.demo` | Medicine catalog management, stock quantity and price updates, availability verification timestamps. |
 
 *(You can also click any demo account pill on the Landing Page or Login Page to pre-fill credentials automatically).*
 
@@ -285,7 +285,7 @@ When a physician prescribes a medication, the backend compares the candidate med
 ## 8. Clinical Limitations & Disclaimer
 
 > [!WARNING]
-> **Educational & Demonstration Prototype:** MediSync was engineered as a healthcare hackathon MVP to showcase medication coordination patterns. It is **not** a production-certified medical software system, nor is it cleared by the FDA or international regulatory health authorities.
+> **Educational & Demonstration Prototype:** MediKit was engineered as a healthcare hackathon MVP to showcase medication coordination patterns. It is **not** a production-certified medical software system, nor is it cleared by the FDA or international regulatory health authorities.
 >
 > - The interaction checker uses a curated sample ruleset of documented drug interactions; the absence of a warning does **not** signify that a drug combination is safe.
 > - Patients should never stop, modify, or start taking medications without consulting a licensed physician or pharmacist.

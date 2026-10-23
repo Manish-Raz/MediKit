@@ -1,5 +1,5 @@
 /**
- * MediSync Doctor Dashboard Logic
+ * MediKit Doctor Dashboard Logic
  */
 
 const SAMPLE_DOCTOR_PATIENTS = [
@@ -8,7 +8,7 @@ const SAMPLE_DOCTOR_PATIENTS = [
     patient: {
       _id: '671900000000000000000001',
       name: 'Johnathan Doe',
-      email: 'john.patient@medisync.demo',
+      email: 'john.patient@medikit.demo',
       phone: '(555) 100-2020',
     },
     relationshipLabel: 'Primary Care Physician',

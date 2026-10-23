@@ -10,7 +10,7 @@ const PharmacyInventory = require('../src/models/PharmacyInventory');
 const { processOverdueDoses, calculatePatientAdherence } = require('../src/services/adherenceService');
 const { checkInteractions } = require('../src/services/interactionService');
 
-const TEST_DB_URI = 'mongodb://127.0.0.1:27017/medisync_test';
+const TEST_DB_URI = 'mongodb://127.0.0.1:27017/medikit_test';
 let app;
 
 beforeAll(async () => {

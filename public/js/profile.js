@@ -1,5 +1,5 @@
 /**
- * MediSync User Profile & Patient Access Management
+ * MediKit User Profile & Patient Access Management
  */
 
 const SAMPLE_ACCESS_LIST = [
@@ -7,7 +7,7 @@ const SAMPLE_ACCESS_LIST = [
     _id: '671900000000000000000041',
     authorizedUser: {
       name: 'Dr. Sarah Jenkins, MD',
-      email: 'dr.jenkins@medisync.demo',
+      email: 'dr.jenkins@medikit.demo',
     },
     role: 'doctor',
     relationshipLabel: 'Primary Care Physician',
@@ -18,7 +18,7 @@ const SAMPLE_ACCESS_LIST = [
     _id: '671900000000000000000042',
     authorizedUser: {
       name: 'Dr. Marcus Chen, MD',
-      email: 'dr.chen@medisync.demo',
+      email: 'dr.chen@medikit.demo',
     },
     role: 'doctor',
     relationshipLabel: 'Attending Cardiologist',
@@ -29,7 +29,7 @@ const SAMPLE_ACCESS_LIST = [
     _id: '671900000000000000000043',
     authorizedUser: {
       name: 'Emily Doe',
-      email: 'emily.caregiver@medisync.demo',
+      email: 'emily.caregiver@medikit.demo',
     },
     role: 'caregiver',
     relationshipLabel: 'Primary Family Caregiver (Daughter)',
@@ -80,7 +80,7 @@ function renderProfileForm(user, profile) {
   const phoneInput = document.getElementById('profile-phone');
 
   if (nameInput) nameInput.value = user.name || 'Johnathan Doe';
-  if (emailInput) emailInput.value = user.email || 'john.patient@medisync.demo';
+  if (emailInput) emailInput.value = user.email || 'john.patient@medikit.demo';
   if (phoneInput) phoneInput.value = user.phone || '(555) 100-2020';
 
   const allergiesInput = document.getElementById('patient-allergies');

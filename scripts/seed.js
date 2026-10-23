@@ -14,7 +14,7 @@ const Notification = require('../src/models/Notification');
 const PharmacyInventory = require('../src/models/PharmacyInventory');
 const AuditLog = require('../src/models/AuditLog');
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/medisync';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/medikit';
 
 const seedDatabase = async () => {
   try {
@@ -45,7 +45,7 @@ const seedDatabase = async () => {
 
     const patientUser = await User.create({
       name: 'Johnathan Doe',
-      email: 'john.patient@medisync.demo',
+      email: 'john.patient@medikit.demo',
       password: defaultPassword,
       role: 'patient',
       phone: '(555) 100-2020',
@@ -55,7 +55,7 @@ const seedDatabase = async () => {
 
     const doctor1User = await User.create({
       name: 'Dr. Sarah Jenkins, MD',
-      email: 'dr.jenkins@medisync.demo',
+      email: 'dr.jenkins@medikit.demo',
       password: defaultPassword,
       role: 'doctor',
       phone: '(555) 200-3030',
@@ -65,7 +65,7 @@ const seedDatabase = async () => {
 
     const doctor2User = await User.create({
       name: 'Dr. Marcus Chen, MD',
-      email: 'dr.chen@medisync.demo',
+      email: 'dr.chen@medikit.demo',
       password: defaultPassword,
       role: 'doctor',
       phone: '(555) 200-4040',
@@ -75,7 +75,7 @@ const seedDatabase = async () => {
 
     const caregiverUser = await User.create({
       name: 'Emily Doe',
-      email: 'emily.caregiver@medisync.demo',
+      email: 'emily.caregiver@medikit.demo',
       password: defaultPassword,
       role: 'caregiver',
       phone: '(555) 300-5050',
@@ -85,7 +85,7 @@ const seedDatabase = async () => {
 
     const pharmacyUser = await User.create({
       name: 'Metro Center Pharmacy Admin',
-      email: 'metro.pharmacy@medisync.demo',
+      email: 'metro.pharmacy@medikit.demo',
       password: defaultPassword,
       role: 'pharmacy',
       phone: '(555) 400-6060',
@@ -660,11 +660,11 @@ const seedDatabase = async () => {
     console.log('====================================================');
     console.log(' Demo Seeding Finished Successfully!');
     console.log(' Demo Accounts Created (Password for all: Password123!)');
-    console.log(' - Patient:   john.patient@medisync.demo');
-    console.log(' - Doctor 1:  dr.jenkins@medisync.demo (Primary Care)');
-    console.log(' - Doctor 2:  dr.chen@medisync.demo (Cardiologist)');
-    console.log(' - Caregiver: emily.caregiver@medisync.demo');
-    console.log(' - Pharmacy:  metro.pharmacy@medisync.demo');
+    console.log(' - Patient:   john.patient@medikit.demo');
+    console.log(' - Doctor 1:  dr.jenkins@medikit.demo (Primary Care)');
+    console.log(' - Doctor 2:  dr.chen@medikit.demo (Cardiologist)');
+    console.log(' - Caregiver: emily.caregiver@medikit.demo');
+    console.log(' - Pharmacy:  metro.pharmacy@medikit.demo');
     console.log('====================================================');
 
     await mongoose.disconnect();
