@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Dashboard — MediSync</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    /* Safety scorecard styling */
+    .scorecard-banner {
+      background: white;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .scorecard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .scorecard-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .scorecard-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+    }
+    .scorecard-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary-navy);
+      line-height: 1.1;
+    }
+    .scorecard-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+    @media (max-width: 768px) {
+      .scorecard-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content -->
+    <div class="app-main">
+      <header class="app-topbar" id="topbar-container"></header>
+
+      <main class="app-content">
+        <!-- Safety Alert Banner -->
+        <div class="safety-disclaimer-banner">
+          <i data-lucide="shield-alert" style="width: 20px; height: 20px; color: var(--primary-teal); flex-shrink: 0; margin-top: 2px;"></i>
+          <div>
+            <strong>Medication Safety Notice:</strong> Always take medications exactly as prescribed by your attending physicians. This dashboard coordinates your active dose schedule across all your care providers.
+          </div>
+        </div>
+
+        <!-- Signature Feature 10: Medication Safety Scorecard -->
+        <div class="scorecard-banner">
+          <div class="scorecard-header">
+            <div>
+              <h2 style="font-size: 1.15rem; font-weight: 800; color: var(--primary-navy); display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="clipboard-check" style="width: 20px; height: 20px; color: var(--primary-teal);"></i>
+                Medication Safety Scorecard
+              </h2>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">
+                Unified overview for patients & physicians showing active records, pending clinical reviews, and daily dose compliance.
+              </p>
+            </div>
+            <button onclick="UI.openLanguageModal()" class="btn btn-sm btn-outline">
+              <i data-lucide="languages" style="width: 14px; height: 14px;"></i> Audio / Language
+            </button>
+          </div>
+
+          <div class="scorecard-grid">
+            <div class="scorecard-item">
+              <div class="scorecard-num" id="scorecard-active-meds">5</div>
+              <div class="scorecard-label">Active Medicines</div>
+            </div>
+
+            <div class="scorecard-item" style="border-left: 3px solid #f59e0b;">
+              <div class="scorecard-num" id="scorecard-items-review" style="color: #b45309;">2</div>
+              <div class="scorecard-label">Items to Review</div>
+            </div>
+
+            <div class="scorecard-item" style="border-left: 3px solid #10b981;">
+              <div class="scorecard-num" id="scorecard-dose-logs" style="color: #065f46;">3/5</div>
+              <div class="scorecard-label">Today's Dose Logs</div>
+            </div>
+
+            <div class="scorecard-item" style="border-left: 3px solid #3b82f6;">
+              <div class="scorecard-num" id="scorecard-freshness" style="font-size: 1.25rem; font-weight: 800; color: #1d4ed8; padding-top: 6px;">Needs Update</div>
+              <div class="scorecard-label">Record Freshness</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Adherence Meter -->
+        <div class="stat-card" style="margin-bottom: 24px;">
+          <div class="stat-icon emerald">
+            <i data-lucide="award" style="width: 26px; height: 26px;"></i>
+          </div>
+          <div style="flex: 1;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <div class="stat-value" id="adherence-rate">83%</div>
+              <span class="badge badge-taken">Good Adherence (Target: &ge;80%)</span>
+            </div>
+            <div class="stat-label">30-Day Medication Adherence Rate</div>
+            <div class="progress-bar-bg" style="margin-top: 10px;">
+              <div class="progress-bar-fill" id="adherence-progress-fill" style="width: 83%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Layout: Doses Schedule & Clinical Alerts -->
+        <div class="grid-main-side">
+          <!-- Left Column: Today's Medication Timeline -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i data-lucide="calendar" style="width: 20px; height: 20px; color: var(--primary-teal);"></i>
+                Today's Medication Schedule
+              </div>
+              <span class="badge badge-verified" id="today-date-badge">Today</span>
+            </div>
+
+            <!-- List of today's doses -->
+            <div id="today-doses-list"></div>
+          </div>
+
+          <!-- Right Column: Safety Alerts & Active Prescriptions -->
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <!-- Allergy & Medical Alerts Card -->
+            <div class="card">
+              <div class="card-header" style="margin-bottom: 12px;">
+                <div class="card-title" style="font-size: 0.98rem;">
+                  <i data-lucide="alert-circle" style="width: 18px; height: 18px; color: var(--status-missed);"></i>
+                  Documented Allergies
+                </div>
+                <a href="/profile.html" style="font-size: 0.78rem;">Edit</a>
+              </div>
+              <div id="patient-allergies-list" style="display: flex; gap: 6px; flex-wrap: wrap;"></div>
+              <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-light); font-size: 0.8rem; color: var(--text-muted);">
+                Emergency Contact: <strong id="emergency-contact-display" style="color: var(--primary-navy);">Emily Doe (Daughter): (555) 300-5050</strong>
+              </div>
+            </div>
+
+            <!-- Interaction & Duplicate Warnings -->
+            <div class="card">
+              <div class="card-header" style="margin-bottom: 12px;">
+                <div class="card-title" style="font-size: 0.98rem;">
+                  <i data-lucide="shield-alert" style="width: 18px; height: 18px; color: #d97706;"></i>
+                  Clinical Safety Screening & Warnings
+                </div>
+              </div>
+              <div id="interaction-alerts-container"></div>
+            </div>
+
+            <!-- Active Prescriptions Quick View -->
+            <div class="card">
+              <div class="card-header" style="margin-bottom: 12px;">
+                <div class="card-title" style="font-size: 0.98rem;">
+                  <i data-lucide="file-text" style="width: 18px; height: 18px; color: var(--primary-teal);"></i>
+                  Active Prescriptions
+                </div>
+                <a href="/prescriptions.html" style="font-size: 0.78rem;">View All</a>
+              </div>
+              <div id="active-prescriptions-list"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Skip Dose Reason Modal -->
+  <div class="modal-backdrop" id="skip-dose-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Record Skipped Dose</h3>
+        <button class="modal-close-btn" onclick="UI.closeModal('skip-dose-modal')">
+          <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 16px;">
+          Recording a dose as skipped for: <strong id="skip-modal-med-title" style="color: var(--primary-navy);">Medication</strong>
+        </p>
+        <div class="form-group">
+          <label class="form-label" for="skip-reason-input">Reason for skipping (Optional for clinical audit):</label>
+          <select class="form-select" id="skip-reason-select" onchange="document.getElementById('skip-reason-input').value = this.value" style="margin-bottom: 8px;">
+            <option value="">-- Choose common reason or type below --</option>
+            <option value="Experiencing side effects / nausea">Experiencing side effects / nausea</option>
+            <option value="Physician instructed temporary pause">Physician instructed temporary pause</option>
+            <option value="Ran out of medication / pending refill">Ran out of medication / pending refill</option>
+            <option value="Fasting for lab test">Fasting for lab test</option>
+            <option value="Forgot to take on time">Forgot to take on time</option>
+          </select>
+          <input type="text" id="skip-reason-input" class="form-control" placeholder="Specify reason or notes...">
+        </div>
+        <p style="font-size: 0.78rem; color: var(--text-muted);">
+          Your healthcare team and authorized caregivers will be notified of persistent skipped doses to help support your health.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="UI.closeModal('skip-dose-modal')">Cancel</button>
+        <button class="btn btn-danger" onclick="confirmSkipDose()">Confirm Skip</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/patient.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initPatientDashboard();
+    });
+  </script>
+</body>
+</html>

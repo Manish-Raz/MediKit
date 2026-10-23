@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pharmacy Dashboard — MediSync</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+  <div class="app-layout">
+    <div id="sidebar-container"></div>
+
+    <div class="app-main">
+      <header class="app-topbar" id="topbar-container"></header>
+
+      <main class="app-content">
+        <!-- Metric Cards -->
+        <div class="grid-4" style="margin-bottom: 24px;">
+          <div class="stat-card">
+            <div class="stat-icon teal">
+              <i data-lucide="package" style="width: 26px; height: 26px;"></i>
+            </div>
+            <div>
+              <div class="stat-value" id="pharmacy-total-items">0</div>
+              <div class="stat-label">Catalog Products</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon emerald">
+              <i data-lucide="check" style="width: 26px; height: 26px;"></i>
+            </div>
+            <div>
+              <div class="stat-value" id="pharmacy-in-stock">0</div>
+              <div class="stat-label">In Stock</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon amber">
+              <i data-lucide="alert-circle" style="width: 26px; height: 26px;"></i>
+            </div>
+            <div>
+              <div class="stat-value" id="pharmacy-low-stock">0</div>
+              <div class="stat-label">Low Stock</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon red">
+              <i data-lucide="x-circle" style="width: 26px; height: 26px;"></i>
+            </div>
+            <div>
+              <div class="stat-value" id="pharmacy-out-stock">0</div>
+              <div class="stat-label">Out of Stock</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inventory Catalog Table -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <i data-lucide="store" style="width: 20px; height: 20px; color: var(--primary-teal);"></i>
+              Pharmacy Medication Catalog & Real-Time Stock
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <input type="text" id="inventory-search" class="form-control" placeholder="Search catalog..." style="width: 220px; padding: 6px 12px; font-size: 0.85rem;">
+              <button class="btn btn-primary btn-sm" onclick="openAddItemModal()">
+                <i data-lucide="plus" style="width: 14px; height: 14px;"></i> Add Medication
+              </button>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Medication & Ingredient</th>
+                  <th>Strength & Form</th>
+                  <th>Availability</th>
+                  <th>Stock Quantity</th>
+                  <th>Unit Price</th>
+                  <th>Last Verified</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="pharmacy-inventory-tbody">
+                <tr>
+                  <td colspan="7" class="empty-state">Loading inventory catalog...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Add Item Modal -->
+  <div class="modal-backdrop" id="add-item-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Add Medication to Catalog</h3>
+        <button class="modal-close-btn" onclick="UI.closeModal('add-item-modal')">
+          <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+        </button>
+      </div>
+      <form id="add-inventory-form">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="item-med-name">Medication Name *</label>
+              <input type="text" id="item-med-name" class="form-control" placeholder="e.g. Lisinopril" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="item-brand-name">Brand Name (Optional)</label>
+              <input type="text" id="item-brand-name" class="form-control" placeholder="e.g. Prinivil">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="item-active-ingredient">Active Ingredient *</label>
+              <input type="text" id="item-active-ingredient" class="form-control" placeholder="e.g. lisinopril" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="item-strength">Strength *</label>
+              <input type="text" id="item-strength" class="form-control" placeholder="e.g. 10mg, 500mg" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="item-form">Dosage Form</label>
+              <select id="item-form" class="form-select">
+                <option value="Tablet">Tablet</option>
+                <option value="Capsule">Capsule</option>
+                <option value="Liquid">Liquid</option>
+                <option value="Inhaler">Inhaler</option>
+                <option value="Injection">Injection</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="item-status">Stock Status</label>
+              <select id="item-status" class="form-select">
+                <option value="in_stock">In Stock</option>
+                <option value="low_stock">Low Stock</option>
+                <option value="out_of_stock">Out of Stock</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="item-quantity">Inventory Quantity</label>
+              <input type="number" id="item-quantity" class="form-control" value="100" min="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="item-price">Retail Price ($)</label>
+              <input type="number" id="item-price" class="form-control" value="12.50" step="0.01" min="0">
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.88rem;">
+              <input type="checkbox" id="item-rx-required" checked>
+              <span>Prescription Required to Dispense</span>
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="UI.closeModal('add-item-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Item</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Item Modal -->
+  <div class="modal-backdrop" id="edit-item-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Update Stock: <span id="edit-item-name"></span></h3>
+        <button class="modal-close-btn" onclick="UI.closeModal('edit-item-modal')">
+          <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+        </button>
+      </div>
+      <form id="edit-inventory-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="edit-item-status">Availability Status</label>
+            <select id="edit-item-status" class="form-select">
+              <option value="in_stock">In Stock</option>
+              <option value="low_stock">Low Stock</option>
+              <option value="out_of_stock">Out of Stock</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="edit-item-quantity">Quantity on Hand</label>
+              <input type="number" id="edit-item-quantity" class="form-control" min="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="edit-item-price">Price ($)</label>
+              <input type="number" id="edit-item-price" class="form-control" step="0.01" min="0">
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.88rem;">
+              <input type="checkbox" id="edit-item-rx-required">
+              <span>Prescription Required</span>
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="UI.closeModal('edit-item-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes & Refresh Timestamp</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/pharmacy.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initPharmacyDashboard();
+    });
+  </script>
+</body>
+</html>

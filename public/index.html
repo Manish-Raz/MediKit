@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediSync — Patient–Doctor Medication Coordination Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    /* Landing page specific styling */
+    .landing-header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-light);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .landing-nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .landing-hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 90px 24px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .landing-hero::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(13, 148, 136, 0.25) 0%, rgba(15, 23, 42, 0) 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(20, 184, 166, 0.15);
+      border: 1px solid rgba(20, 184, 166, 0.3);
+      color: var(--accent-teal);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.15;
+      max-width: 860px;
+      margin: 0 auto 20px;
+      letter-spacing: -0.03em;
+    }
+    .hero-title span {
+      background: linear-gradient(135deg, #14b8a6, #34d399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: #94a3b8;
+      max-width: 660px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+    }
+    .hero-ctas {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .section-header h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--primary-navy);
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .section-header p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .feature-card {
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+    }
+    .feature-card:hover {
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-4px);
+      border-color: var(--primary-teal);
+    }
+    .feature-icon-box {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-md);
+      background: var(--teal-subtle);
+      color: var(--primary-teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .feature-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      margin-bottom: 10px;
+    }
+    .feature-card p {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+    .demo-accounts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .demo-account-pill {
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .demo-account-pill:hover {
+      border-color: var(--primary-teal);
+      background-color: var(--teal-subtle);
+      transform: translateY(-2px);
+    }
+    .demo-account-role {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--primary-teal);
+      margin-bottom: 4px;
+    }
+    .demo-account-name {
+      font-weight: 700;
+      color: var(--primary-navy);
+      font-size: 0.95rem;
+    }
+    .demo-account-email {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .landing-footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 50px 24px 30px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Landing Header -->
+  <header class="landing-header">
+    <div class="landing-nav-container">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="brand-icon" style="width: 36px; height: 36px;">
+          <i data-lucide="activity" style="width: 20px; height: 20px;"></i>
+        </div>
+        <div class="brand-title" style="color: var(--primary-navy);">Medi<span style="color: var(--primary-teal);">Sync</span></div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <a href="/login.html" class="btn btn-secondary">Sign In</a>
+        <a href="/register.html" class="btn btn-primary">Create Free Account</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="landing-hero">
+    <div class="hero-badge">
+      <i data-lucide="shield-check" style="width: 16px; height: 16px;"></i>
+      Connected Healthcare & Medication Safety Platform
+    </div>
+    <h1 class="hero-title">
+      Safer Medication Coordination Between <span>Patients, Doctors & Caregivers</span>
+    </h1>
+    <p class="hero-subtitle">
+      Eliminate polypharmacy hazards, duplicate prescriptions, and dangerous drug interactions with a unified, real-time coordination dashboard.
+    </p>
+    <div class="hero-ctas">
+      <a href="/login.html" class="btn btn-lg btn-primary">
+        <i data-lucide="play" style="width: 18px; height: 18px;"></i> Launch Interactive Demo
+      </a>
+      <a href="#demo-accounts" class="btn btn-lg btn-secondary" style="background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.2);">
+        <i data-lucide="users" style="width: 18px; height: 18px;"></i> Explore 4 Demo Roles
+      </a>
+    </div>
+  </section>
+
+  <!-- Safety Disclaimer Strip -->
+  <div style="background: #f1f5f9; border-bottom: 1px solid var(--border-light); padding: 14px 24px;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.85rem; color: var(--text-secondary); text-align: center;">
+      <i data-lucide="info" style="width: 16px; height: 16px; color: var(--primary-teal); flex-shrink: 0;"></i>
+      <span><strong>Hackathon Clinical Aid:</strong> MediSync is a medication screening prototype. It does not replace professional medical advice, clinical diagnosis, or complete pharmaceutical reviews.</span>
+    </div>
+  </div>
+
+  <!-- Features Grid -->
+  <section class="section-container">
+    <div class="section-header">
+      <h2>Comprehensive Medication Coordination</h2>
+      <p>Built to protect patients receiving prescriptions from multiple healthcare providers.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="feature-card">
+        <div class="feature-icon-box">
+          <i data-lucide="alert-triangle" style="width: 28px; height: 28px;"></i>
+        </div>
+        <h3>Interaction & Duplication Engine</h3>
+        <p>Real-time screening flags therapeutic duplicates, matching active ingredients under different brand names, and documented drug-drug interactions before prescriptions are issued.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-box">
+          <i data-lucide="calendar-check" style="width: 28px; height: 28px;"></i>
+        </div>
+        <h3>Daily Schedule & Adherence</h3>
+        <p>Patients track upcoming daily doses, log doses as Taken, or record reasons for Skipped doses. Intelligent server-side jobs automatically identify overdue doses and compute 30-day adherence.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-box">
+          <i data-lucide="shield" style="width: 28px; height: 28px;"></i>
+        </div>
+        <h3>Role-Based Caregiver Access</h3>
+        <p>Patients explicitly authorize doctors and family caregivers. Authorized caregivers receive missed-dose alerts and can log doses only when granted permission.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-box">
+          <i data-lucide="history" style="width: 28px; height: 28px;"></i>
+        </div>
+        <h3>Prescription Audit Trail</h3>
+        <p>Every modification creates a clean versioned history (v1, v2) preserving previous dosages and reasons. Discontinued medicines automatically stop future doses without destroying records.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-box">
+          <i data-lucide="bell-ring" style="width: 28px; height: 28px;"></i>
+        </div>
+        <h3>Proactive Missed-Dose Alerts</h3>
+        <p>When multiple doses are missed, MediSync automatically generates adherence notifications for the patient, primary doctor, and authorized family members.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-box">
+          <i data-lucide="map-pin" style="width: 28px; height: 28px;"></i>
+        </div>
+        <h3>Pharmacy & Hospital Finder</h3>
+        <p>Locate nearby partner pharmacies and 24/7 emergency medical centers with OpenStreetMap navigation and real reported pharmacy stock availability.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo Accounts Section -->
+  <section id="demo-accounts" style="background: white; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); padding: 80px 24px;">
+    <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+      <div class="section-header">
+        <h2>Instant 1-Click Demo Accounts</h2>
+        <p>Select any seeded role below to experience MediSync with realistic clinical data. Default password for all accounts is: <code>Password123!</code></p>
+      </div>
+
+      <div class="demo-accounts-grid">
+        <div class="demo-account-pill" onclick="quickFillAndGo('john.patient@medisync.demo')">
+          <div class="demo-account-role">Patient Role</div>
+          <div class="demo-account-name">Johnathan Doe</div>
+          <div class="demo-account-email">john.patient@medisync.demo</div>
+          <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px;">Daily dose tracking, adherence meter, drug allergy alerts.</p>
+        </div>
+
+        <div class="demo-account-pill" onclick="quickFillAndGo('dr.jenkins@medisync.demo')">
+          <div class="demo-account-role">Doctor 1 (PCP)</div>
+          <div class="demo-account-name">Dr. Sarah Jenkins</div>
+          <div class="demo-account-email">dr.jenkins@medisync.demo</div>
+          <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px;">Prescription authoring, interaction screening, audit history.</p>
+        </div>
+
+        <div class="demo-account-pill" onclick="quickFillAndGo('dr.chen@medisync.demo')">
+          <div class="demo-account-role">Doctor 2 (Cardiologist)</div>
+          <div class="demo-account-name">Dr. Marcus Chen</div>
+          <div class="demo-account-email">dr.chen@medisync.demo</div>
+          <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px;">Cross-physician coordination & multi-doctor oversight.</p>
+        </div>
+
+        <div class="demo-account-pill" onclick="quickFillAndGo('emily.caregiver@medisync.demo')">
+          <div class="demo-account-role">Caregiver Role</div>
+          <div class="demo-account-name">Emily Doe (Daughter)</div>
+          <div class="demo-account-email">emily.caregiver@medisync.demo</div>
+          <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px;">Family adherence monitoring & authorized dose logging.</p>
+        </div>
+
+        <div class="demo-account-pill" onclick="quickFillAndGo('metro.pharmacy@medisync.demo')">
+          <div class="demo-account-role">Pharmacy Role</div>
+          <div class="demo-account-name">Metro Center Pharmacy</div>
+          <div class="demo-account-email">metro.pharmacy@medisync.demo</div>
+          <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px;">Medicine stock catalog & verification timestamps.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; gap: 20px;">
+      <div>
+        <div style="font-size: 1.1rem; font-weight: 700; color: white;">MediSync Platform</div>
+        <div style="font-size: 0.78rem; color: #64748b; margin-top: 4px;">Healthcare Coordination & Medication Adherence Prototype &bull; Hackathon Edition</div>
+      </div>
+      <div>
+        <a href="/login.html" style="color: #cbd5e1; margin-right: 18px;">Sign In</a>
+        <a href="/register.html" style="color: #cbd5e1; margin-right: 18px;">Register</a>
+        <a href="/locations.html" style="color: #cbd5e1;">Medical Directory</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    if (window.lucide) lucide.createIcons();
+
+    function quickFillAndGo(email) {
+      window.location.href = `/login.html?email=${encodeURIComponent(email)}`;
+    }
+
+    // GSAP animations for landing page
+    if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.from('.hero-badge, .hero-title, .hero-subtitle, .hero-ctas', {
+        duration: 0.7,
+        y: 20,
+        opacity: 0,
+        stagger: 0.12,
+        ease: 'power2.out',
+      });
+      gsap.from('.feature-card', {
+        scrollTrigger: '.section-container',
+        duration: 0.5,
+        y: 20,
+        opacity: 0,
+        stagger: 0.08,
+        delay: 0.2,
+      });
+    }
+  </script>
+</body>
+</html>

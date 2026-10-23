@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medications & Timeline — MediSync</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+  <div class="app-layout">
+    <div id="sidebar-container"></div>
+
+    <div class="app-main">
+      <header class="app-topbar" id="topbar-container"></header>
+
+      <main class="app-content">
+        <!-- Safety Alert Banner -->
+        <div class="safety-disclaimer-banner">
+          <i data-lucide="info" style="width: 20px; height: 20px; color: var(--primary-teal); flex-shrink: 0;"></i>
+          <div>
+            <strong>Unified Medication Reconciliation:</strong> Displays active, discontinued, and patient-reported OTC medications across all attending clinicians. Reconcile differences before clinical consultations.
+          </div>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="card" style="margin-bottom: 24px; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-sm btn-primary" onclick="filterMedications('all')">All Medications</button>
+            <button class="btn btn-sm btn-secondary" onclick="filterMedications('active')">Active Only</button>
+            <button class="btn btn-sm btn-secondary" onclick="filterMedications('discontinued')">Discontinued</button>
+            <button class="btn btn-sm btn-secondary" onclick="filterMedications('patient_reported')">Reported OTC</button>
+          </div>
+          <div>
+            <input type="text" id="medications-search-input" class="form-control" placeholder="Search by medication or ingredient..." style="width: 280px; padding: 6px 12px; font-size: 0.88rem;">
+          </div>
+        </div>
+
+        <!-- Medications Grid -->
+        <div class="grid-3" id="medications-cards-grid"></div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/medications.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initMedicationsPage();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prescriptions & History — MediSync</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+  <div class="app-layout">
+    <div id="sidebar-container"></div>
+
+    <div class="app-main">
+      <header class="app-topbar" id="topbar-container"></header>
+
+      <main class="app-content">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <i data-lucide="clipboard-list" style="width: 20px; height: 20px; color: var(--primary-teal);"></i>
+              Prescription Registry & Revisions
+            </div>
+            <div>
+              <input type="text" id="prescriptions-search-input" class="form-control" placeholder="Search prescriptions..." style="width: 240px; padding: 6px 12px; font-size: 0.85rem;">
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Medication & Version</th>
+                  <th>Strength</th>
+                  <th>Dosage Instructions</th>
+                  <th>Prescribing Doctor</th>
+                  <th>Valid Period</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="prescriptions-tbody">
+                <tr>
+                  <td colspan="7" class="empty-state">Loading prescription records...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Prescription Revision & Audit History Modal -->
+  <div class="modal-backdrop" id="prescription-history-modal">
+    <div class="modal-box" style="max-width: 680px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="history-modal-title">Prescription History & Audit Log</h3>
+        <button class="modal-close-btn" onclick="UI.closeModal('prescription-history-modal')">
+          <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4 style="font-size: 0.95rem; color: var(--primary-navy); margin-bottom: 12px;">Prescription Revisions (Version Chain)</h4>
+        <div id="history-versions-timeline" style="margin-bottom: 24px;"></div>
+
+        <h4 style="font-size: 0.95rem; color: var(--primary-navy); margin-bottom: 12px;">Clinical Audit Log Entries</h4>
+        <div id="history-audit-logs"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="UI.closeModal('prescription-history-modal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modify Prescription Modal -->
+  <div class="modal-backdrop" id="modify-prescription-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modify-presc-title">Modify Prescription</h3>
+        <button class="modal-close-btn" onclick="UI.closeModal('modify-prescription-modal')">
+          <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+        </button>
+      </div>
+      <form id="modify-prescription-form">
+        <div class="modal-body">
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 14px;">
+            Modifying this prescription will archive the current version and generate a new incremented version. Future doses will be updated automatically.
+          </p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="modify-strength">New Strength *</label>
+              <input type="text" id="modify-strength" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="modify-frequency">Frequency *</label>
+              <select id="modify-frequency" class="form-select" required>
+                <option value="once_daily">Once Daily</option>
+                <option value="twice_daily">Twice Daily</option>
+                <option value="three_times_daily">Three Times Daily</option>
+                <option value="every_6_hours">Every 6 Hours</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="modify-instructions">Updated Dosage Instructions *</label>
+            <input type="text" id="modify-instructions" class="form-control" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="modify-reason">Clinical Reason for Modification *</label>
+            <textarea id="modify-reason" class="form-control" rows="3" placeholder="Explain the clinical rationale for dose/schedule adjustment..." required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="UI.closeModal('modify-prescription-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save as New Version</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Discontinue Modal -->
+  <div class="modal-backdrop" id="discontinue-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Discontinue Prescription</h3>
+        <button class="modal-close-btn" onclick="UI.closeModal('discontinue-modal')">
+          <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 14px;">
+          Are you sure you want to discontinue: <strong id="discontinue-med-name" style="color: var(--status-missed);"></strong>?
+        </p>
+        <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px;">
+          All future upcoming doses will be permanently removed from the patient's schedule. The prescription will be marked as discontinued in medical history.
+        </p>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="discontinue-reason-input">Clinical Reason for Discontinuation *</label>
+          <input type="text" id="discontinue-reason-input" class="form-control" placeholder="e.g. Treatment goal met, Adverse effect, Switched therapy" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="UI.closeModal('discontinue-modal')">Cancel</button>
+        <button type="button" class="btn btn-danger" onclick="confirmDiscontinuePrescription()">Confirm Discontinuation</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/prescriptions.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initPrescriptionsPage();
+    });
+  </script>
+</body>
+</html>

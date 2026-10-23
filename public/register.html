@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account — MediSync</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      padding: 32px 20px;
+    }
+    .auth-card {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      width: 100%;
+      max-width: 560px;
+      padding: 36px 32px;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card" id="register-box">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div class="brand-icon" style="width: 44px; height: 44px; margin: 0 auto 12px;">
+          <i data-lucide="activity" style="width: 24px; height: 24px;"></i>
+        </div>
+        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--primary-navy);">Register for MediSync</h2>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">Choose your role to get started</p>
+      </div>
+
+      <div id="register-error-alert" style="display: none; background: #fef2f2; border: 1px solid #fecdd3; color: #991b1b; padding: 10px 14px; border-radius: var(--radius-md); font-size: 0.85rem; margin-bottom: 16px;"></div>
+
+      <form id="register-form">
+        <!-- Role Selection -->
+        <div class="form-group">
+          <label class="form-label" for="reg-role">Select Your Healthcare Role</label>
+          <select id="reg-role" class="form-select" required onchange="handleRoleChange(this.value)">
+            <option value="patient" selected>Patient (Manage my medication schedule)</option>
+            <option value="doctor">Doctor / Physician (Prescribe and monitor patients)</option>
+            <option value="caregiver">Caregiver / Family (Help track and monitor doses)</option>
+            <option value="pharmacy">Pharmacy (Manage medicine catalog & inventory)</option>
+          </select>
+        </div>
+
+        <!-- General Info -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="reg-name">Full Name</label>
+            <input type="text" id="reg-name" class="form-control" placeholder="e.g. Johnathan Doe" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Email Address</label>
+            <input type="email" id="reg-email" class="form-control" placeholder="name@domain.com" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Password</label>
+            <input type="password" id="reg-password" class="form-control" placeholder="Min 6 characters" minlength="6" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-phone">Phone Number</label>
+            <input type="tel" id="reg-phone" class="form-control" placeholder="(555) 000-0000">
+          </div>
+        </div>
+
+        <!-- Role Specific Fields -->
+        <!-- Doctor Fields -->
+        <div id="role-fields-doctor" style="display: none; background: var(--bg-surface); padding: 16px; border-radius: var(--radius-md); margin-bottom: 20px; border: 1px solid var(--border-light);">
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-navy); margin-bottom: 12px;">Doctor Professional Details</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="doc-specialty">Medical Specialty</label>
+              <input type="text" id="doc-specialty" class="form-control" placeholder="e.g. Cardiology, Internal Medicine">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="doc-license">License Identifier</label>
+              <input type="text" id="doc-license" class="form-control" placeholder="e.g. MD-NY-12345">
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="doc-clinic">Clinic / Hospital Affiliation</label>
+            <input type="text" id="doc-clinic" class="form-control" placeholder="e.g. City General Hospital">
+          </div>
+          <div class="form-help" style="margin-top: 6px; color: #b45309;">
+            Note: Publicly registered doctor accounts are designated as unverified demo accounts for demonstration.
+          </div>
+        </div>
+
+        <!-- Caregiver Fields -->
+        <div id="role-fields-caregiver" style="display: none; background: var(--bg-surface); padding: 16px; border-radius: var(--radius-md); margin-bottom: 20px; border: 1px solid var(--border-light);">
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-navy); margin-bottom: 12px;">Caregiver Relationship</div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="care-rel">Relationship to Patient</label>
+            <input type="text" id="care-rel" class="form-control" placeholder="e.g. Daughter, Spouse, Legal Guardian">
+          </div>
+        </div>
+
+        <!-- Pharmacy Fields -->
+        <div id="role-fields-pharmacy" style="display: none; background: var(--bg-surface); padding: 16px; border-radius: var(--radius-md); margin-bottom: 20px; border: 1px solid var(--border-light);">
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-navy); margin-bottom: 12px;">Pharmacy Business Details</div>
+          <div class="form-group">
+            <label class="form-label" for="pharm-name">Pharmacy Name</label>
+            <input type="text" id="pharm-name" class="form-control" placeholder="e.g. Metro Care Pharmacy">
+          </div>
+          <div class="form-row" style="margin-bottom: 0;">
+            <div class="form-group">
+              <label class="form-label" for="pharm-address">Physical Address</label>
+              <input type="text" id="pharm-address" class="form-control" placeholder="e.g. 100 Main Street">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pharm-license">Pharmacy License #</label>
+              <input type="text" id="pharm-license" class="form-control" placeholder="e.g. PHARM-99231">
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" id="reg-submit-btn" class="btn btn-primary" style="width: 100%; margin-top: 8px;">
+          <i data-lucide="user-plus" style="width: 16px; height: 16px;"></i> Complete Registration
+        </button>
+      </form>
+
+      <div style="margin-top: 24px; text-align: center; font-size: 0.88rem; color: var(--text-secondary);">
+        Already have an account? <a href="/login.html" style="font-weight: 600;">Sign in here</a>
+      </div>
+      <div style="margin-top: 10px; text-align: center; font-size: 0.82rem;">
+        <a href="/" style="color: var(--text-muted);">&larr; Return to Homepage</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/common.js"></script>
+  <script>
+    if (window.lucide) lucide.createIcons();
+
+    function handleRoleChange(role) {
+      document.getElementById('role-fields-doctor').style.display = role === 'doctor' ? 'block' : 'none';
+      document.getElementById('role-fields-caregiver').style.display = role === 'caregiver' ? 'block' : 'none';
+      document.getElementById('role-fields-pharmacy').style.display = role === 'pharmacy' ? 'block' : 'none';
+    }
+
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const role = document.getElementById('reg-role').value;
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const phone = document.getElementById('reg-phone').value.trim();
+
+      const payload = { role, name, email, password, phone };
+
+      if (role === 'doctor') {
+        payload.specialty = document.getElementById('doc-specialty').value.trim();
+        payload.licenseNumber = document.getElementById('doc-license').value.trim();
+        payload.clinicHospital = document.getElementById('doc-clinic').value.trim();
+      } else if (role === 'caregiver') {
+        payload.relationship = document.getElementById('care-rel').value.trim();
+      } else if (role === 'pharmacy') {
+        payload.pharmacyName = document.getElementById('pharm-name').value.trim();
+        payload.address = document.getElementById('pharm-address').value.trim();
+        payload.licenseNumber = document.getElementById('pharm-license').value.trim();
+      }
+
+      const errorAlert = document.getElementById('register-error-alert');
+      const submitBtn = document.getElementById('reg-submit-btn');
+
+      errorAlert.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Creating account...';
+
+      try {
+        const res = await API.post('/auth/register', payload);
+        if (res.success) {
+          Auth.redirectRoleDashboard(res.user.role);
+        }
+      } catch (err) {
+        errorAlert.innerText = err.message || 'Registration failed.';
+        errorAlert.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="user-plus" style="width: 16px; height: 16px;"></i> Complete Registration';
+        if (window.lucide) lucide.createIcons();
+      }
+    });
+
+    if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.from('#register-box', { duration: 0.45, y: 20, opacity: 0, ease: 'power2.out' });
+    }
+  </script>
+</body>
+</html>

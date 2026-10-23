@@ -1,0 +1,177 @@
+/* MediSync Responsive Stylesheet */
+
+@media (max-width: 1024px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-main-side {
+    grid-template-columns: 1fr;
+  }
+
+  .scorecard-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 250px;
+    --topbar-height: 64px;
+  }
+
+  .app-sidebar {
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+
+  .app-sidebar.mobile-open {
+    transform: translateX(0);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
+  }
+
+  .sidebar-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 45;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+  }
+
+  .sidebar-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .app-main {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .app-topbar {
+    padding: 0 16px;
+  }
+
+  .topbar-right {
+    gap: 8px;
+  }
+
+  .topbar-right .btn {
+    padding: 6px 10px;
+    font-size: 0.78rem;
+  }
+
+  .app-content {
+    padding: 16px 12px;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .scorecard-banner {
+    padding: 18px 14px;
+  }
+
+  .scorecard-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px;
+  }
+
+  .card {
+    padding: 16px 14px;
+  }
+
+  .dose-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .dose-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .stat-card {
+    padding: 14px;
+  }
+
+  .stat-value {
+    font-size: 1.35rem;
+  }
+
+  #toast-container {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .toast {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .table th, .table td {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.05rem;
+  }
+
+  .scorecard-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .modal-box {
+    margin: 8px;
+    max-height: 96vh;
+  }
+
+  .modal-body {
+    padding: 16px 14px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title {
+    font-size: 2.2rem !important;
+  }
+}
+
+/* Reduced Motion for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

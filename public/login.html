@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — MediSync</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      padding: 24px;
+    }
+    .auth-card {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      width: 100%;
+      max-width: 480px;
+      padding: 36px 32px;
+    }
+    .demo-selector-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card" id="login-box">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div class="brand-icon" style="width: 44px; height: 44px; margin: 0 auto 12px;">
+          <i data-lucide="activity" style="width: 24px; height: 24px;"></i>
+        </div>
+        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--primary-navy);">Welcome to MediSync</h2>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">Sign in to coordinate medication records</p>
+      </div>
+
+      <!-- Quick Fill Demo Accounts -->
+      <div style="background: var(--bg-surface); padding: 12px 14px; border-radius: var(--radius-md); margin-bottom: 20px; border: 1px solid var(--border-light);">
+        <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 6px;">
+          Quick-Fill Seeded Demo Account:
+        </span>
+        <div class="demo-selector-row">
+          <button type="button" class="btn btn-sm btn-outline" onclick="selectDemoUser('john.patient@medisync.demo')">Patient</button>
+          <button type="button" class="btn btn-sm btn-outline" onclick="selectDemoUser('dr.jenkins@medisync.demo')">Dr. Jenkins</button>
+          <button type="button" class="btn btn-sm btn-outline" onclick="selectDemoUser('dr.chen@medisync.demo')">Dr. Chen</button>
+          <button type="button" class="btn btn-sm btn-outline" onclick="selectDemoUser('emily.caregiver@medisync.demo')">Caregiver</button>
+          <button type="button" class="btn btn-sm btn-outline" onclick="selectDemoUser('metro.pharmacy@medisync.demo')">Pharmacy</button>
+        </div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">Default demo password: <code>Password123!</code></div>
+      </div>
+
+      <div id="login-error-alert" style="display: none; background: #fef2f2; border: 1px solid #fecdd3; color: #991b1b; padding: 10px 14px; border-radius: var(--radius-md); font-size: 0.85rem; margin-bottom: 16px;"></div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label" for="login-email">Email Address</label>
+          <input type="email" id="login-email" class="form-control" placeholder="name@domain.com" required autofocus>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="login-password">Password</label>
+          <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" id="login-btn" class="btn btn-primary" style="width: 100%; margin-top: 8px;">
+          <i data-lucide="log-in" style="width: 16px; height: 16px;"></i> Sign In
+        </button>
+      </form>
+
+      <div style="margin-top: 24px; text-align: center; font-size: 0.88rem; color: var(--text-secondary);">
+        Don't have an account? <a href="/register.html" style="font-weight: 600;">Create an account</a>
+      </div>
+      <div style="margin-top: 10px; text-align: center; font-size: 0.82rem;">
+        <a href="/" style="color: var(--text-muted);">&larr; Return to Homepage</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/common.js"></script>
+  <script>
+    if (window.lucide) lucide.createIcons();
+
+    // Check if already logged in
+    API.get('/auth/me').then(res => {
+      if (res.success && res.user) {
+        Auth.redirectRoleDashboard(res.user.role);
+      }
+    }).catch(() => {});
+
+    // Check URL params for pre-filled email
+    const urlParams = new URLSearchParams(window.location.search);
+    const prefillEmail = urlParams.get('email');
+    if (prefillEmail) {
+      selectDemoUser(prefillEmail);
+    }
+
+    function selectDemoUser(email) {
+      document.getElementById('login-email').value = email;
+      document.getElementById('login-password').value = 'Password123!';
+    }
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      const errorAlert = document.getElementById('login-error-alert');
+      const submitBtn = document.getElementById('login-btn');
+
+      errorAlert.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Signing in...';
+
+      try {
+        const res = await API.post('/auth/login', { email, password });
+        if (res.success) {
+          Auth.redirectRoleDashboard(res.user.role);
+        }
+      } catch (err) {
+        errorAlert.innerText = err.message || 'Login failed. Please verify credentials.';
+        errorAlert.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="log-in" style="width: 16px; height: 16px;"></i> Sign In';
+        if (window.lucide) lucide.createIcons();
+      }
+    });
+
+    if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.from('#login-box', { duration: 0.45, y: 20, opacity: 0, ease: 'power2.out' });
+    }
+  </script>
+</body>
+</html>

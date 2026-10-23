@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications & Alerts — MediSync</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+  <div class="app-layout">
+    <div id="sidebar-container"></div>
+
+    <div class="app-main">
+      <header class="app-topbar" id="topbar-container"></header>
+
+      <main class="app-content">
+        <div class="card" style="margin-bottom: 24px; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <label for="notifications-filter-select" style="font-weight: 600; font-size: 0.9rem; color: var(--primary-navy);">Filter:</label>
+            <select id="notifications-filter-select" class="form-select" style="width: auto; padding: 6px 14px; font-size: 0.88rem;">
+              <option value="all">All Alerts & Notifications</option>
+              <option value="unread">Unread Only</option>
+            </select>
+          </div>
+          <div>
+            <button id="mark-all-read-btn" class="btn btn-sm btn-secondary">
+              <i data-lucide="check-check" style="width: 14px; height: 14px;"></i> Mark All as Read
+            </button>
+          </div>
+        </div>
+
+        <div id="notifications-list-container">
+          <p style="color: var(--text-muted); padding: 16px;">Loading notifications...</p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/notifications.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initNotificationsPage();
+    });
+  </script>
+</body>
+</html>
