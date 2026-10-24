@@ -94,11 +94,11 @@ async function loadMedications() {
     if (res.success && res.prescriptions && res.prescriptions.length > 0) {
       currentMedications = res.prescriptions;
     } else {
-      currentMedications = SAMPLE_MEDICATIONS;
+      currentMedications = [];
     }
   } catch (err) {
-    console.log('Using sample medications list.');
-    currentMedications = SAMPLE_MEDICATIONS;
+    console.error('Failed to load medications:', err);
+    currentMedications = [];
   }
   renderMedicationCards(currentMedications);
 }

@@ -110,8 +110,7 @@ const SAMPLE_WARNINGS = [
   },
 ];
 
-let currentPatient = null;
-let todayDosesList = SAMPLE_TODAY_DOSES;
+let todayDosesList = [];
 let activeDoseToSkip = null;
 
 async function initPatientDashboard() {

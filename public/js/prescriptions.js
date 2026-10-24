@@ -129,11 +129,12 @@ async function loadPrescriptions(patientId = null) {
     if (res.success && res.prescriptions && res.prescriptions.length > 0) {
       activePrescriptionsList = res.prescriptions;
     } else {
-      activePrescriptionsList = SAMPLE_PRESCRIPTIONS;
+      // No prescriptions returned; show empty list
+      activePrescriptionsList = [];
     }
   } catch (err) {
     console.log('Using sample prescriptions list.');
-    activePrescriptionsList = SAMPLE_PRESCRIPTIONS;
+    activePrescriptionsList = [];
   }
   renderPrescriptionsTable(activePrescriptionsList);
 }

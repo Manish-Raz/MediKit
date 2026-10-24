@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f172a">
   <title>MediKit — Patient–Doctor Medication Coordination Platform</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,376 +13,466 @@
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/responsive.css">
   <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
   <style>
-    /* Landing page specific styling */
+    :root {
+      --mk-navy: #0f172a;
+      --mk-navy-light: #1e293b;
+      --mk-teal: #0f766e;
+      --mk-teal-bright: #14b8a6;
+      --mk-mint: #34d399;
+      --mk-text: #334155;
+      --mk-muted: #64748b;
+      --mk-border: #e2e8f0;
+      --mk-soft: #f8fafc;
+      --mk-radius: 18px;
+      --mk-shadow: 0 5px 20px rgba(15, 23, 42, .06);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--mk-text);
+      background: #fff;
+      line-height: 1.6;
+    }
+    a { color: inherit; }
     .landing-header {
-      background: #ffffff;
-      border-bottom: 1px solid var(--border-light);
       position: sticky;
       top: 0;
       z-index: 100;
+      background: rgba(255,255,255,.96);
+      border-bottom: 1px solid var(--mk-border);
+      backdrop-filter: blur(12px);
     }
     .landing-nav-container {
-      max-width: 1200px;
+      width: min(1200px, 100%);
       margin: 0 auto;
-      padding: 16px 24px;
+      padding: 14px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 20px;
     }
-    .landing-hero {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    .brand-lockup { display: flex; align-items: center; gap: 11px; min-width: 0; }
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 13px;
+      background: var(--mk-teal);
       color: white;
-      padding: 90px 24px 80px;
-      text-align: center;
+    }
+    .brand-title { color: var(--mk-navy); font-size: 1.2rem; font-weight: 800; letter-spacing: -.04em; }
+    .landing-nav-actions { display: flex; align-items: center; justify-content: flex-end; gap: 12px; flex-wrap: wrap; }
+    .mk-btn {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 11px 17px;
+      border: 1px solid transparent;
+      border-radius: 11px;
+      font: inherit;
+      font-size: .9rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+    .mk-btn:hover { transform: translateY(-2px); }
+    .mk-btn-primary { color: white; background: var(--mk-teal); box-shadow: 0 5px 12px rgba(15,118,110,.18); }
+    .mk-btn-primary:hover { background: #115e59; }
+    .mk-btn-secondary { color: var(--mk-navy); background: white; border-color: #cbd5e1; }
+    .mk-btn-secondary:hover { border-color: var(--mk-teal); background: #f0fdfa; }
+    .mk-btn-lg { padding: 14px 20px; min-height: 50px; }
+
+    .landing-hero {
       position: relative;
       overflow: hidden;
+      padding: clamp(66px, 8vw, 100px) 24px 82px;
+      color: white;
+      text-align: center;
+      background: linear-gradient(135deg, var(--mk-navy) 0%, var(--mk-navy-light) 100%);
+      isolation: isolate;
     }
     .landing-hero::before {
-      content: '';
+      content: "";
       position: absolute;
-      top: -100px;
+      z-index: -1;
+      width: min(800px, 100vw);
+      height: 440px;
       left: 50%;
+      top: -130px;
       transform: translateX(-50%);
-      width: 800px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(13, 148, 136, 0.25) 0%, rgba(15, 23, 42, 0) 70%);
+      background: radial-gradient(ellipse, rgba(20,184,166,.23), transparent 68%);
       pointer-events: none;
     }
+    .hero-content { max-width: 940px; margin: 0 auto; }
     .hero-badge {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
-      background: rgba(20, 184, 166, 0.15);
-      border: 1px solid rgba(20, 184, 166, 0.3);
-      color: var(--accent-teal);
-      padding: 6px 14px;
-      border-radius: var(--radius-full);
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 24px;
+      max-width: 100%;
+      padding: 7px 14px;
+      margin-bottom: 25px;
+      border: 1px solid rgba(45,212,191,.35);
+      border-radius: 999px;
+      background: rgba(20,184,166,.12);
+      color: #99f6e4;
+      font-size: .82rem;
+      font-weight: 700;
     }
     .hero-title {
-      font-size: 3.2rem;
+      max-width: 900px;
+      margin: 0 auto 22px;
+      color: #fff;
+      font-size: clamp(2.25rem, 5.2vw, 4rem);
       font-weight: 800;
-      line-height: 1.15;
-      max-width: 860px;
-      margin: 0 auto 20px;
-      letter-spacing: -0.03em;
+      line-height: 1.12;
+      letter-spacing: -.055em;
     }
     .hero-title span {
-      background: linear-gradient(135deg, #14b8a6, #34d399);
+      color: #5eead4;
+      background: linear-gradient(120deg, #2dd4bf, #6ee7b7);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     .hero-subtitle {
-      font-size: 1.15rem;
-      color: #94a3b8;
-      max-width: 660px;
-      margin: 0 auto 36px;
-      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto 32px;
+      color: #cbd5e1;
+      font-size: clamp(1rem, 1.7vw, 1.13rem);
+      line-height: 1.8;
     }
-    .hero-ctas {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
+    .hero-ctas { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .hero-ctas .mk-btn-secondary {
+      color: white;
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.25);
     }
-    .section-container {
-      max-width: 1200px;
+    .hero-ctas .mk-btn-secondary:hover { background: rgba(255,255,255,.15); }
+
+    .disclaimer-strip { padding: 15px 24px; background: #f1f5f9; border-bottom: 1px solid var(--mk-border); }
+    .disclaimer-inner {
+      width: min(1200px, 100%);
       margin: 0 auto;
-      padding: 80px 24px;
-    }
-    .section-header {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-    .section-header h2 {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--primary-navy);
-      letter-spacing: -0.02em;
-      margin-bottom: 12px;
-    }
-    .section-header p {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    .feature-card {
-      background: white;
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 32px 28px;
-      box-shadow: var(--shadow-sm);
-      transition: all 0.25s ease;
-    }
-    .feature-card:hover {
-      box-shadow: var(--shadow-xl);
-      transform: translateY(-4px);
-      border-color: var(--primary-teal);
-    }
-    .feature-icon-box {
-      width: 56px;
-      height: 56px;
-      border-radius: var(--radius-md);
-      background: var(--teal-subtle);
-      color: var(--primary-teal);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20px;
+      gap: 10px;
+      color: #475569;
+      font-size: .84rem;
+      text-align: center;
     }
-    .feature-card h3 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--primary-navy);
-      margin-bottom: 10px;
+    .disclaimer-inner i { flex: 0 0 auto; color: var(--mk-teal); }
+
+    .section-container { width: min(1200px, 100%); margin: 0 auto; padding: 78px 24px; }
+    .section-header { max-width: 720px; margin: 0 auto 42px; text-align: center; }
+    .section-eyebrow {
+      margin: 0 0 10px;
+      color: var(--mk-teal);
+      font-size: .76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .13em;
     }
-    .feature-card p {
-      font-size: 0.92rem;
-      color: var(--text-secondary);
-      line-height: 1.55;
+    .section-header h2 {
+      margin: 0 0 13px;
+      color: var(--mk-navy);
+      font-size: clamp(1.75rem, 3.5vw, 2.45rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -.045em;
     }
-    .demo-accounts-grid {
+    .section-header > p { margin: 0 auto; color: var(--mk-muted); font-size: 1rem; line-height: 1.75; }
+
+    /* The cards are visible by default. No scroll animation changes their opacity. */
+    .grid-3 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-top: 24px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+      gap: 22px;
+      width: 100%;
     }
+    .feature-card {
+      min-width: 0;
+      padding: 28px;
+      border: 1px solid var(--mk-border);
+      border-radius: var(--mk-radius);
+      background: #fff;
+      box-shadow: var(--mk-shadow);
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      translate: none;
+      transition: box-shadow .22s ease, border-color .22s ease, transform .22s ease;
+    }
+    .feature-card:hover {
+      border-color: #5eead4;
+      box-shadow: 0 14px 32px rgba(15,23,42,.10);
+      transform: translateY(-4px);
+    }
+    .feature-icon-box {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 20px;
+      border-radius: 15px;
+      background: #ccfbf1;
+      color: var(--mk-teal);
+    }
+    .feature-icon-box i, .feature-icon-box svg { width: 27px; height: 27px; }
+    .feature-card h3 { margin: 0 0 10px; color: var(--mk-navy); font-size: 1.08rem; font-weight: 800; line-height: 1.45; }
+    .feature-card p { margin: 0; color: #526176; font-size: .91rem; line-height: 1.75; }
+
+    .demo-section { padding: 78px 24px; background: var(--mk-soft); border-top: 1px solid var(--mk-border); border-bottom: 1px solid var(--mk-border); }
+    .demo-inner { width: min(1200px, 100%); margin: 0 auto; }
+    .demo-password-note {
+      margin-top: 16px !important;
+      padding: 10px 14px;
+      display: inline-block;
+      border: 1px solid var(--mk-border);
+      border-radius: 10px;
+      background: #fff;
+      font-size: .83rem !important;
+    }
+    .demo-password-note code { padding: 3px 6px; border-radius: 5px; background: #f1f5f9; color: var(--mk-navy); overflow-wrap: anywhere; }
+    .demo-accounts-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
     .demo-account-pill {
+      width: 100%;
+      padding: 21px;
+      border: 1px solid var(--mk-border);
+      border-radius: 15px;
       background: white;
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 18px;
       text-align: left;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease, background .2s ease;
     }
-    .demo-account-pill:hover {
-      border-color: var(--primary-teal);
-      background-color: var(--teal-subtle);
-      transform: translateY(-2px);
+    .demo-account-pill:hover, .demo-account-pill:focus-visible {
+      border-color: #5eead4;
+      background: #f0fdfa;
+      box-shadow: 0 8px 22px rgba(15,23,42,.06);
+      transform: translateY(-3px);
+      outline: none;
     }
-    .demo-account-role {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--primary-teal);
-      margin-bottom: 4px;
+    .demo-account-role { margin-bottom: 6px; color: var(--mk-teal); font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .demo-account-name { color: var(--mk-navy); font-size: .98rem; font-weight: 800; line-height: 1.45; }
+    .demo-account-email { margin-top: 4px; color: #64748b; font-size: .79rem; overflow-wrap: anywhere; }
+    .demo-account-pill p { margin: 12px 0 0; color: #526176; font-size: .82rem; line-height: 1.65; }
+
+    .landing-footer { padding: 36px 24px; background: var(--mk-navy); color: #cbd5e1; }
+    .footer-inner {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 22px;
     }
-    .demo-account-name {
-      font-weight: 700;
-      color: var(--primary-navy);
-      font-size: 0.95rem;
+    .footer-title { color: white; font-size: 1.05rem; font-weight: 800; }
+    .footer-subtitle { margin-top: 5px; color: #94a3b8; font-size: .78rem; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
+    .footer-links a { color: #cbd5e1; font-size: .86rem; text-decoration: none; }
+    .footer-links a:hover { color: #5eead4; }
+
+    @media (max-width: 950px) {
+      .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .demo-accounts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .section-container { padding: 64px 22px; }
     }
-    .demo-account-email {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 2px;
+    @media (max-width: 620px) {
+      .landing-nav-container { padding: 12px 16px; gap: 12px; }
+      .brand-icon { width: 36px; height: 36px; }
+      .brand-title { font-size: 1.08rem; }
+      .landing-nav-actions { gap: 8px; }
+      .landing-nav-actions .mk-btn { min-height: 39px; padding: 8px 10px; font-size: .78rem; }
+      .landing-hero { padding: 62px 18px 60px; }
+      .hero-badge { font-size: .73rem; line-height: 1.5; }
+      .hero-title { font-size: clamp(2rem, 9vw, 2.8rem); }
+      .hero-subtitle { font-size: .96rem; }
+      .hero-ctas { flex-direction: column; align-items: stretch; }
+      .hero-ctas .mk-btn { width: 100%; }
+      .disclaimer-strip { padding: 13px 16px; }
+      .disclaimer-inner { align-items: flex-start; font-size: .77rem; text-align: left; }
+      .section-container, .demo-section { padding: 54px 16px; }
+      .section-header { margin-bottom: 28px; }
+      .grid-3, .demo-accounts-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+      .feature-card { padding: 23px; }
+      .feature-card p { font-size: .9rem; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+      .footer-links { gap: 14px; }
     }
-    .landing-footer {
-      background: #0f172a;
-      color: #94a3b8;
-      padding: 50px 24px 30px;
-      font-size: 0.85rem;
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
     }
   </style>
 </head>
 <body>
-
-  <!-- Landing Header -->
   <header class="landing-header">
     <div class="landing-nav-container">
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <div class="brand-icon" style="width: 36px; height: 36px;">
-          <i data-lucide="activity" style="width: 20px; height: 20px;"></i>
-        </div>
-        <div class="brand-title" style="color: var(--primary-navy);">Medi<span style="color: var(--primary-teal);">Sync</span></div>
-      </div>
-      <div style="display: flex; align-items: center; gap: 14px;">
-        <a href="/login.html" class="btn btn-secondary">Sign In</a>
-        <a href="/register.html" class="btn btn-primary">Create Free Account</a>
-      </div>
+      <a class="brand-lockup" href="/" aria-label="MediKit home" style="text-decoration:none">
+        <span class="brand-icon"><i data-lucide="activity" aria-hidden="true"></i></span>
+        <span class="brand-title">Medi<span style="color:#0f766e">Kit</span></span>
+      </a>
+      <nav class="landing-nav-actions" aria-label="Main navigation">
+        <a href="/login.html" class="mk-btn mk-btn-secondary">Sign In</a>
+        <a href="/register.html" class="mk-btn mk-btn-primary">Create Account</a>
+      </nav>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="landing-hero">
-    <div class="hero-badge">
-      <i data-lucide="shield-check" style="width: 16px; height: 16px;"></i>
-      Connected Healthcare & Medication Safety Platform
-    </div>
-    <h1 class="hero-title">
-      Safer Medication Coordination Between <span>Patients, Doctors & Caregivers</span>
-    </h1>
-    <p class="hero-subtitle">
-      Eliminate polypharmacy hazards, duplicate prescriptions, and dangerous drug interactions with a unified, real-time coordination dashboard.
-    </p>
-    <div class="hero-ctas">
-      <a href="/login.html" class="btn btn-lg btn-primary">
-        <i data-lucide="play" style="width: 18px; height: 18px;"></i> Launch Interactive Demo
-      </a>
-      <a href="#demo-accounts" class="btn btn-lg btn-secondary" style="background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.2);">
-        <i data-lucide="users" style="width: 18px; height: 18px;"></i> Explore 4 Demo Roles
-      </a>
-    </div>
-  </section>
-
-  <!-- Safety Disclaimer Strip -->
-  <div style="background: #f1f5f9; border-bottom: 1px solid var(--border-light); padding: 14px 24px;">
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.85rem; color: var(--text-secondary); text-align: center;">
-      <i data-lucide="info" style="width: 16px; height: 16px; color: var(--primary-teal); flex-shrink: 0;"></i>
-      <span><strong>Hackathon Clinical Aid:</strong> MediKit is a medication screening prototype. It does not replace professional medical advice, clinical diagnosis, or complete pharmaceutical reviews.</span>
-    </div>
-  </div>
-
-  <!-- Features Grid -->
-  <section class="section-container">
-    <div class="section-header">
-      <h2>Comprehensive Medication Coordination</h2>
-      <p>Built to protect patients receiving prescriptions from multiple healthcare providers.</p>
-    </div>
-
-    <div class="grid-3">
-      <div class="feature-card">
-        <div class="feature-icon-box">
-          <i data-lucide="alert-triangle" style="width: 28px; height: 28px;"></i>
+  <main>
+    <section class="landing-hero">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i data-lucide="shield-check" aria-hidden="true"></i>
+          Connected Healthcare &amp; Medication Safety Platform
         </div>
-        <h3>Interaction & Duplication Engine</h3>
-        <p>Real-time screening flags therapeutic duplicates, matching active ingredients under different brand names, and documented drug-drug interactions before prescriptions are issued.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon-box">
-          <i data-lucide="calendar-check" style="width: 28px; height: 28px;"></i>
-        </div>
-        <h3>Daily Schedule & Adherence</h3>
-        <p>Patients track upcoming daily doses, log doses as Taken, or record reasons for Skipped doses. Intelligent server-side jobs automatically identify overdue doses and compute 30-day adherence.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon-box">
-          <i data-lucide="shield" style="width: 28px; height: 28px;"></i>
-        </div>
-        <h3>Role-Based Caregiver Access</h3>
-        <p>Patients explicitly authorize doctors and family caregivers. Authorized caregivers receive missed-dose alerts and can log doses only when granted permission.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon-box">
-          <i data-lucide="history" style="width: 28px; height: 28px;"></i>
-        </div>
-        <h3>Prescription Audit Trail</h3>
-        <p>Every modification creates a clean versioned history (v1, v2) preserving previous dosages and reasons. Discontinued medicines automatically stop future doses without destroying records.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon-box">
-          <i data-lucide="bell-ring" style="width: 28px; height: 28px;"></i>
-        </div>
-        <h3>Proactive Missed-Dose Alerts</h3>
-        <p>When multiple doses are missed, MediKit automatically generates adherence notifications for the patient, primary doctor, and authorized family members.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon-box">
-          <i data-lucide="map-pin" style="width: 28px; height: 28px;"></i>
-        </div>
-        <h3>Pharmacy & Hospital Finder</h3>
-        <p>Locate nearby partner pharmacies and 24/7 emergency medical centers with OpenStreetMap navigation and real reported pharmacy stock availability.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Demo Accounts Section -->
-  <section id="demo-accounts" style="background: white; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); padding: 80px 24px;">
-    <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
-      <div class="section-header">
-        <h2>Instant 1-Click Demo Accounts</h2>
-        <p>Select any seeded role below to experience MediKit with realistic clinical data. Default password for all accounts is: <code>Password123!</code></p>
-      </div>
-
-      <div class="demo-accounts-grid">
-        <div class="demo-account-pill" onclick="quickFillAndGo('john.patient@medikit.demo')">
-          <div class="demo-account-role">Patient Role</div>
-          <div class="demo-account-name">Johnathan Doe</div>
-          <div class="demo-account-email">john.patient@medikit.demo</div>
-          <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px;">Daily dose tracking, adherence meter, drug allergy alerts.</p>
-        </div>
-
-        <div class="demo-account-pill" onclick="quickFillAndGo('dr.jenkins@medikit.demo')">
-          <div class="demo-account-role">Doctor 1 (PCP)</div>
-          <div class="demo-account-name">Dr. Sarah Jenkins</div>
-          <div class="demo-account-email">dr.jenkins@medikit.demo</div>
-          <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px;">Prescription authoring, interaction screening, audit history.</p>
-        </div>
-
-        <div class="demo-account-pill" onclick="quickFillAndGo('dr.chen@medikit.demo')">
-          <div class="demo-account-role">Doctor 2 (Cardiologist)</div>
-          <div class="demo-account-name">Dr. Marcus Chen</div>
-          <div class="demo-account-email">dr.chen@medikit.demo</div>
-          <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px;">Cross-physician coordination & multi-doctor oversight.</p>
-        </div>
-
-        <div class="demo-account-pill" onclick="quickFillAndGo('emily.caregiver@medikit.demo')">
-          <div class="demo-account-role">Caregiver Role</div>
-          <div class="demo-account-name">Emily Doe (Daughter)</div>
-          <div class="demo-account-email">emily.caregiver@medikit.demo</div>
-          <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px;">Family adherence monitoring & authorized dose logging.</p>
-        </div>
-
-        <div class="demo-account-pill" onclick="quickFillAndGo('metro.pharmacy@medikit.demo')">
-          <div class="demo-account-role">Pharmacy Role</div>
-          <div class="demo-account-name">Metro Center Pharmacy</div>
-          <div class="demo-account-email">metro.pharmacy@medikit.demo</div>
-          <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px;">Medicine stock catalog & verification timestamps.</p>
+        <h1 class="hero-title">Safer Medication Coordination Between <span>Patients, Doctors &amp; Caregivers</span></h1>
+        <p class="hero-subtitle">Coordinate prescriptions, track daily medicines, flag possible duplicate medications, and help patients and authorized caregivers stay informed with a unified medication dashboard.</p>
+        <div class="hero-ctas">
+          <a href="/login.html" class="mk-btn mk-btn-primary mk-btn-lg"><i data-lucide="log-in" aria-hidden="true"></i> Launch Interactive Demo</a>
+          <a href="#demo-accounts" class="mk-btn mk-btn-secondary mk-btn-lg"><i data-lucide="users" aria-hidden="true"></i> Explore Demo Roles</a>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
+    <aside class="disclaimer-strip">
+      <div class="disclaimer-inner">
+        <i data-lucide="info" aria-hidden="true"></i>
+        <span><strong>Hackathon Clinical Aid:</strong> MediKit is a medication coordination prototype. It does not replace professional medical advice, clinical diagnosis, or a pharmacist's review.</span>
+      </div>
+    </aside>
+
+    <section class="section-container" aria-labelledby="features-title">
+      <header class="section-header">
+        <p class="section-eyebrow">One coordinated care experience</p>
+        <h2 id="features-title">Comprehensive Medication Coordination</h2>
+        <p>Designed to help patients and healthcare providers keep medication information organized, visible, and easier to coordinate.</p>
+      </header>
+
+      <div class="grid-3">
+        <article class="feature-card">
+          <div class="feature-icon-box"><i data-lucide="alert-triangle" aria-hidden="true"></i></div>
+          <h3>Interaction &amp; Duplication Engine</h3>
+          <p>Flags possible therapeutic duplicates, including matching active ingredients under different brand names, and highlights known drug interactions when supported by the configured data source.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon-box"><i data-lucide="calendar-check" aria-hidden="true"></i></div>
+          <h3>Daily Schedule &amp; Adherence</h3>
+          <p>Patients can review upcoming doses and record doses as taken or skipped. The application can summarize adherence from recorded medication activity.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon-box"><i data-lucide="shield-check" aria-hidden="true"></i></div>
+          <h3>Role-Based Caregiver Access</h3>
+          <p>Supports a coordinated workflow for patients, doctors, and authorized caregivers, with access controlled by the application's permissions.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon-box"><i data-lucide="history" aria-hidden="true"></i></div>
+          <h3>Prescription Audit Trail</h3>
+          <p>Keep a history of prescription changes, including previous dosage details and discontinuation records, so past treatment information remains available.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon-box"><i data-lucide="bell-ring" aria-hidden="true"></i></div>
+          <h3>Proactive Missed-Dose Alerts</h3>
+          <p>Help patients notice upcoming or overdue doses and surface adherence concerns for the patient and authorized care team when alerting is configured.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon-box"><i data-lucide="map-pin" aria-hidden="true"></i></div>
+          <h3>Pharmacy &amp; Hospital Finder</h3>
+          <p>Provide a place to locate nearby pharmacies and hospitals. Stock availability should be shown only when verified data is available.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="demo-accounts" class="demo-section">
+      <div class="demo-inner">
+        <header class="section-header">
+          <p class="section-eyebrow">Explore the platform</p>
+          <h2>Quick Demo Access</h2>
+          <p>Select a demo role to continue to the sign-in page. Use these accounts only if they have been seeded in your local database.</p>
+          <p class="demo-password-note"><strong>Demo password:</strong> <code>Password123!</code> <span style="color:#64748b">— if configured for these accounts.</span></p>
+        </header>
+
+        <div class="demo-accounts-grid">
+          <button type="button" class="demo-account-pill" onclick="quickFillAndGo('john.patient@medikit.demo')">
+            <div class="demo-account-role">Patient role</div>
+            <div class="demo-account-name">Johnathan Doe</div>
+            <div class="demo-account-email">john.patient@medikit.demo</div>
+            <p>Daily dose tracking, adherence overview, and medication alerts.</p>
+          </button>
+
+          <button type="button" class="demo-account-pill" onclick="quickFillAndGo('dr.jenkins@medikit.demo')">
+            <div class="demo-account-role">Doctor role · PCP</div>
+            <div class="demo-account-name">Dr. Sarah Jenkins</div>
+            <div class="demo-account-email">dr.jenkins@medikit.demo</div>
+            <p>Prescription management, interaction screening, and history review.</p>
+          </button>
+
+          <button type="button" class="demo-account-pill" onclick="quickFillAndGo('dr.chen@medikit.demo')">
+            <div class="demo-account-role">Doctor role · Cardiology</div>
+            <div class="demo-account-name">Dr. Marcus Chen</div>
+            <div class="demo-account-email">dr.chen@medikit.demo</div>
+            <p>Cross-physician coordination and medication oversight.</p>
+          </button>
+
+          <button type="button" class="demo-account-pill" onclick="quickFillAndGo('emily.caregiver@medikit.demo')">
+            <div class="demo-account-role">Caregiver role</div>
+            <div class="demo-account-name">Emily Doe (Daughter)</div>
+            <div class="demo-account-email">emily.caregiver@medikit.demo</div>
+            <p>Authorized family monitoring and permitted dose logging.</p>
+          </button>
+
+          <button type="button" class="demo-account-pill" onclick="quickFillAndGo('metro.pharmacy@medikit.demo')">
+            <div class="demo-account-role">Pharmacy role</div>
+            <div class="demo-account-name">Metro Center Pharmacy</div>
+            <div class="demo-account-email">metro.pharmacy@medikit.demo</div>
+            <p>Medicine catalog and stock verification, if enabled in the app.</p>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
   <footer class="landing-footer">
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; gap: 20px;">
+    <div class="footer-inner">
       <div>
-        <div style="font-size: 1.1rem; font-weight: 700; color: white;">MediKit Platform</div>
-        <div style="font-size: 0.78rem; color: #64748b; margin-top: 4px;">Healthcare Coordination & Medication Adherence Prototype &bull; Hackathon Edition</div>
+        <div class="footer-title">MediKit Platform</div>
+        <div class="footer-subtitle">Healthcare Coordination &amp; Medication Adherence Prototype · Hackathon Edition</div>
       </div>
-      <div>
-        <a href="/login.html" style="color: #cbd5e1; margin-right: 18px;">Sign In</a>
-        <a href="/register.html" style="color: #cbd5e1; margin-right: 18px;">Register</a>
-        <a href="/locations.html" style="color: #cbd5e1;">Medical Directory</a>
-      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="/login.html">Sign In</a>
+        <a href="/register.html">Register</a>
+        <a href="/locations.html">Medical Directory</a>
+      </nav>
     </div>
   </footer>
 
   <script>
-    if (window.lucide) lucide.createIcons();
-
-    function quickFillAndGo(email) {
-      window.location.href = `/login.html?email=${encodeURIComponent(email)}`;
+    // Render Lucide icons when the CDN is available.
+    if (window.lucide && typeof window.lucide.createIcons === "function") {
+      window.lucide.createIcons();
     }
 
-    // GSAP animations for landing page
-    if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      gsap.from('.hero-badge, .hero-title, .hero-subtitle, .hero-ctas', {
-        duration: 0.7,
-        y: 20,
-        opacity: 0,
-        stagger: 0.12,
-        ease: 'power2.out',
-      });
-      gsap.from('.feature-card', {
-        scrollTrigger: '.section-container',
-        duration: 0.5,
-        y: 20,
-        opacity: 0,
-        stagger: 0.08,
-        delay: 0.2,
-      });
+    // Preserve the existing quick-demo flow: pass the selected email to login.
+    function quickFillAndGo(email) {
+      window.location.href = "/login.html?email=" + encodeURIComponent(email);
     }
   </script>
 </body>

@@ -64,11 +64,12 @@ async function loadNotifications() {
     if (res.success && res.notifications && res.notifications.length > 0) {
       allNotifications = res.notifications;
     } else {
-      allNotifications = SAMPLE_NOTIFICATIONS;
+      // No notifications returned; show empty list
+      allNotifications = [];
     }
   } catch (err) {
     console.log('Using sample notifications.');
-    allNotifications = SAMPLE_NOTIFICATIONS;
+    allNotifications = [];
   }
   renderNotificationsList(allNotifications);
 }
